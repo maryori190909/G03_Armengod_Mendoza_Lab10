@@ -18,6 +18,11 @@ public class BNode<E extends Comparable<E>>{
         for (int i = 0; i < n; i++){
             this.childs.add(null);}
         }
-    
+        
+    public boolean nodeFull(int n) {
+        return count == n;
+    }
+
+
 
 }
