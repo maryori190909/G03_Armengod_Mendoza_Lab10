@@ -40,4 +40,13 @@ public class BNode<E extends Comparable<E>>{
     }
 
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Nodo ID: " + idNode + " , Claves: ");
+    for (int i = 0; i < count; i++) {
+        sb.append(keys.get(i)).append(" ");
+    }
+    return sb.toString();
+    }
 }
+
