@@ -1,6 +1,6 @@
 
 import java.util.ArrayList;
-import exeptions.*;
+import Actividad1.exeptions.*;
 public class BTree<E extends Comparable<E>> {
 
     private BNode<E> root;
@@ -21,7 +21,7 @@ public class BTree<E extends Comparable<E>> {
     public void insert(E cl) {
     try {
         up = false;
-        E mediana = push(root, cl);
+        E mediana = push( root , cl);
     if (up) {
         BNode<E> nuevo = new BNode<>(orden);
         nuevo.count = 1;

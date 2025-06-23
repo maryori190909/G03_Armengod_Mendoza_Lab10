@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import exeptions.*;
+import Actividad1.exeptions.*;
 
 public class BNode<E extends Comparable<E>>{
 
