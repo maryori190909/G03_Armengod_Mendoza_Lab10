@@ -57,8 +57,17 @@ public class BTree<E extends Comparable<E>> {
         return mediana;
     }
 
+    private void putNode(BNode<E> actual, E cl, BNode<E> rChild, int pos)
+    {
+    for (int i = actual.count - 1; i >= pos; i--) {
+        actual.keys.set(i + 1, actual.keys.get(i));
+        actual.childs.set(i + 2, actual.childs.get(i + 1));
+    }
+        actual.keys.set(pos, cl);
+        actual.childs.set(pos + 1, rChild);
+        actual.count++;
+    }
 
-    
     }
 
     
