@@ -35,38 +35,61 @@ public class BTree<E extends Comparable<E>> {
     }
 
     private E push(BNode<E> actual, E cl) throws ItemDuplicated {
-    int[] pos = new int[1];
-    E mediana;
-    if (actual == null) {
-        up = true;
-        nDes = null;
-    return cl;
-    }
-    boolean found = actual.searchNode(cl, pos);
-    if (found) {
-    throw new ItemDuplicated("La clave " + cl + " ya existe en el arbol.");
-    }
-        mediana = push(actual.childs.get(pos[0]), cl);
-    if (!up) return null;
-    if (actual.nodeFull(orden - 1)) {
-        mediana = divideNode(actual, mediana, pos[0]);
-    } else {
-        putNode(actual, mediana, nDes, pos[0]);
-        up = false;
-    }
-        return mediana;
-    }
+        int[] pos = new int[1];
+        E mediana;
+        if (actual == null) {
+            up = true;
+            nDes = null;
+        return cl;
+        }
+        boolean found = actual.searchNode(cl, pos);
+        if (found) {
+        throw new ItemDuplicated("La clave " + cl + " ya existe en el arbol.");
+        }
+            mediana = push(actual.childs.get(pos[0]), cl);
+        if (!up) return null;
+        if (actual.nodeFull(orden - 1)) {
+            mediana = divideNode(actual, mediana, pos[0]);
+        } else {
+            putNode(actual, mediana, nDes, pos[0]);
+            up = false;
+        }
+            return mediana;
+        }
 
     private void putNode(BNode<E> actual, E cl, BNode<E> rChild, int pos)
     {
-    for (int i = actual.count - 1; i >= pos; i--) {
-        actual.keys.set(i + 1, actual.keys.get(i));
-        actual.childs.set(i + 2, actual.childs.get(i + 1));
-    }
-        actual.keys.set(pos, cl);
-        actual.childs.set(pos + 1, rChild);
-        actual.count++;
-    }
+        for (int i = actual.count - 1; i >= pos; i--) {
+            actual.keys.set(i + 1, actual.keys.get(i));
+            actual.childs.set(i + 2, actual.childs.get(i + 1));
+        }
+            actual.keys.set(pos, cl);
+            actual.childs.set(pos + 1, rChild);
+            actual.count++;
+        }
+
+    private E divideNode(BNode<E> actual, E cl, int k) {
+        BNode<E> rChild = nDes;
+        int mid = (k <= orden / 2) ? orden / 2 : orden / 2 + 1;
+        nDes = new BNode<>(orden);
+        for (int i = mid; i < orden - 1; i++) {
+            nDes.keys.set(i - mid, actual.keys.get(i));
+            nDes.childs.set(i - mid + 1, actual.childs.get(i + 1));
+        }
+            nDes.count = (orden - 1) - mid;
+            actual.count = mid;
+        if (k <= orden / 2) {
+            putNode(actual, cl, rChild, k);
+        } else {
+            putNode(nDes, cl, rChild, k - mid);
+        }
+        E median = actual.keys.get(actual.count - 1);
+        nDes.childs.set(0, actual.childs.get(actual.count));
+        actual.count--;
+        up = true;
+        return median;
+        }
+
 
     }
 
