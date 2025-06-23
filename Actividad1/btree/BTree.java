@@ -17,3 +17,20 @@ public class BTree<E extends Comparable<E>> {
     return this.root == null;
     }
 }
+
+    public void insert(E cl) {
+    try {
+        up = false;
+        E mediana = push(root, cl);
+    if (up) {
+        BNode<E> nuevo = new BNode<>(orden);
+        nuevo.count = 1;
+        nuevo.keys.set(0, mediana);
+        nuevo.childs.set(0, root);
+        nuevo.childs.set(1, nDes);
+        root = nuevo;
+    }
+    } catch (ItemDuplicated e) {
+    System.out.println(e.getMessage());
+    }
+    }
