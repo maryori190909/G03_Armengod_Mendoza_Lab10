@@ -90,6 +90,18 @@ public class BTree<E extends Comparable<E>> {
         return median;
         }
 
+    @Override
+    public String toString() {
+        String s = " ";
+        if (isEmpty()) {
+            s += "BTree esta vacio...\n";
+        } else {
+            s += "Id.Nodo / Claves Nodo / Id.Padre / Id.Hijos\n";
+            s += writeTree(this.root, null);
+        }
+        return s;
+    }
+    
 
     }
 
