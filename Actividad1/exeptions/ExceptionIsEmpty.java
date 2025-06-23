@@ -1,3 +1,3 @@
-public class ExceptionIsEmpty {
+public class ExceptionIsEmpty extends Exception{
 
 }
