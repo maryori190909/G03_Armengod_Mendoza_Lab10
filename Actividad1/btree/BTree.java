@@ -12,5 +12,8 @@ public class BTree<E extends Comparable<E>> {
     this.orden = orden;
     this.root = null;
     }
-
+    
+    public boolean isEmpty() {
+    return this.root == null;
+    }
 }
