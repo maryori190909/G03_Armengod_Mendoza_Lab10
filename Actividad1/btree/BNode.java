@@ -35,7 +35,9 @@ public class BNode<E extends Comparable<E>>{
     return false;
 }
 }
-
+    public boolean nodeEmpty() {
+        return count == 0;
+    }
 
 
 }
