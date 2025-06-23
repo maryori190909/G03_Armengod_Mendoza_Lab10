@@ -33,4 +33,32 @@ public class BTree<E extends Comparable<E>> {
     } catch (ItemDuplicated e) {
     System.out.println(e.getMessage());
     }
+
+    private E push(BNode<E> actual, E cl) throws ItemDuplicated {
+    int[] pos = new int[1];
+    E mediana;
+    if (actual == null) {
+        up = true;
+        nDes = null;
+    return cl;
     }
+    boolean found = actual.searchNode(cl, pos);
+    if (found) {
+    throw new ItemDuplicated("La clave " + cl + " ya existe en el arbol.");
+    }
+        mediana = push(actual.childs.get(pos[0]), cl);
+    if (!up) return null;
+    if (actual.nodeFull(orden - 1)) {
+        mediana = divideNode(actual, mediana, pos[0]);
+    } else {
+        putNode(actual, mediana, nDes, pos[0]);
+        up = false;
+    }
+        return mediana;
+    }
+
+
+    
+    }
+
+    
