@@ -1,3 +1,3 @@
-public class BTree {
+public class BTree<E extends Comparable<E>> {
 
 }
