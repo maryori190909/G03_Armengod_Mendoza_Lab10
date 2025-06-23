@@ -102,7 +102,34 @@ public class BTree<E extends Comparable<E>> {
         return s;
     }
     
+    private String writeTree(BNode<E> actual, Integer idPadre) {
+        if (actual == null) return "";
+            StringBuilder sb = new StringBuilder();
+            StringBuilder claves = new StringBuilder("(");
+        for (int i = 0; i < actual.count; i++) {
+            claves.append(actual.keys.get(i));
+        if (i < actual.count - 1) claves.append(", ");
+        }
+            claves.append(")");
+            ArrayList<Integer> hijos = new ArrayList<>();
+        for (int i = 0; i <= actual.count; i++) {
+            BNode<E> hijo = actual.childs.get(i);
+        if (hijo != null) hijos.add(hijo.idNode);
+        }
+            sb.append(String.format("%-8d %-16s %-9s %-10s\n",
+            actual.idNode,
+            claves.toString(),
+            idPadre == null ? " -" : "[" + idPadre + "]",
+            hijos.isEmpty() ? " - " : hijos.toString() ));
+        for (int i = 0; i <= actual.count; i++) {
+            BNode<E> hijo = actual.childs.get(i);
+        if (hijo != null) {
+            sb.append(writeTree(hijo, actual.idNode));
+        }
+        }
+            return sb.toString();
+        }
+}
 
-    }
 
     
