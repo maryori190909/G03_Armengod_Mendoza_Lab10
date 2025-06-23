@@ -8,4 +8,9 @@ public class BTree<E extends Comparable<E>> {
     private boolean up;
     private BNode<E> nDes;
 
+    public BTree(int orden) {
+    this.orden = orden;
+    this.root = null;
+    }
+
 }
