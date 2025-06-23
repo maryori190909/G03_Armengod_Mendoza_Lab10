@@ -18,10 +18,23 @@ public class BNode<E extends Comparable<E>>{
         for (int i = 0; i < n; i++){
             this.childs.add(null);}
         }
-        
+
     public boolean nodeFull(int n) {
         return count == n;
     }
+
+    public boolean searchNode(E key, int[] posi){
+        int i =0;
+        while (i < count && key.compareTo(keys.get(i)) > 0) {
+            i++;
+        }
+        posi[0] = i;
+        if (i < count && key.compareTo(keys.get(i)) == 0) {
+            return true;
+        } else {
+    return false;
+}
+}
 
 
 
