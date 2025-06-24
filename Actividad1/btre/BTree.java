@@ -1,6 +1,10 @@
 package Actividad1.btre;
 import java.util.ArrayList;
 import Actividad1.exeptions.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 public class BTree<E extends Comparable<E>> {
 
