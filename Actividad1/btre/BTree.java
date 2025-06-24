@@ -215,6 +215,10 @@ public class BTree<E extends Comparable<E>> {
         }
         return node;
     }
+
+    public static BTree <Integer>{
+        
+    }
 }
 
 
