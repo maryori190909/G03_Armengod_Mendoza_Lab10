@@ -138,17 +138,18 @@ public class BTree<E extends Comparable<E>> {
 
     private E searchRecursive(BNode<E> node, E cl) throws ItemNoFound {
         if (node == null) throw new ItemNoFound("Clave no encontrada.");
-        
         int i = 0;
         while (i < node.count && cl.compareTo(node.keys.get(i)) > 0) {
             i++;
         }
-
         if (i < node.count && cl.compareTo(node.keys.get(i)) == 0) {
             return node.keys.get(i);
         }
-
         return searchRecursive(node.childs.get(i), cl);
+    }
+
+    public boolean searchNode(E cl) {
+        return searchNodeRecursive(root, cl);
     }
 }
 
