@@ -1,5 +1,4 @@
 package Actividad1.btre;
-import java.util.ArrayList;
 import Actividad1.exeptions.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -217,7 +216,14 @@ public class BTree<E extends Comparable<E>> {
     }
 
     public static BTree <Integer> buildBTree(String arch) throws ItemNoFound {
+        try (BufferedReader leer = new BufferedReader(new FileReader(arch))) {
+            int orden = Integer.parseInt(leer.readLine().trim());
+            BTree<Integer> tree = new BTree<>(orden);
 
+            Map<Integer, BNode<Integer>> nodos = new HashMap<>();
+            Map<Integer, Integer> niveles = new HashMap<>();
+            Map<Integer, List<Integer>> hijosTemp = new HashMap<>();
+        }
     }
 }
 
