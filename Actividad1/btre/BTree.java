@@ -223,6 +223,18 @@ public class BTree<E extends Comparable<E>> {
             Map<Integer, BNode<Integer>> nodos = new HashMap<>();
             Map<Integer, Integer> niveles = new HashMap<>();
             Map<Integer, List<Integer>> hijosTemp = new HashMap<>();
+
+            String linea;
+            while ((linea = leer.readLine()) != null) {
+                String[] partes = linea.split(",");
+                int nivel = Integer.parseInt(partes[0]);
+                int idNodo = Integer.parseInt(partes[1]);
+
+                List<Integer> claves = new ArrayList<>();
+                for (int i = 2; i < partes.length; i++) {
+                    claves.add(Integer.parseInt(partes[i]));
+                }
+
         }
     }
 }
