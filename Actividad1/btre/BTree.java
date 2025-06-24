@@ -164,6 +164,17 @@ public class BTree<E extends Comparable<E>> {
         }
         return searchNodeRecursive(node.childs.get(i), cl);
     }
+
+    public void remove(E cl) {
+        if (isEmpty()) {
+            System.out.println("El arbol se encuentra vacio, no se puede eliminar.");
+            return;
+        }
+        root = removeRecursive(root, cl);
+        if (root != null && root.count == 0 && root.childs.get(0) != null) {
+            root = root.childs.get(0);
+        }
+    }
 }
 
 
