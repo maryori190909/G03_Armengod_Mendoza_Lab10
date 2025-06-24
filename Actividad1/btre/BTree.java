@@ -175,6 +175,34 @@ public class BTree<E extends Comparable<E>> {
             root = root.childs.get(0);
         }
     }
+
+    private BNode<E> removeRecursive(BNode<E> node, E cl) {
+        int idx = 0;
+        while (idx < node.count && cl.compareTo(node.keys.get(idx)) > 0) {
+            idx++;
+        }
+
+        if (idx < node.count && cl.compareTo(node.keys.get(idx)) == 0) {
+            if (node.childs.get(idx) == null) {
+                for (int i = idx; i < node.count - 1; i++) {
+                    node.keys.set(i, node.keys.get(i + 1));
+                }
+                node.keys.set(node.count - 1, null);
+                node.count--;
+            } else {
+                BNode<E> pred = node.childs.get(idx);
+                while (pred.childs.get(pred.count) != null) {
+                    pred = pred.childs.get(pred.count);
+                }
+                E predecesor = pred.keys.get(pred.count - 1);
+                node.keys.set(idx, predecesor);
+                node.childs.set(idx, removeRecursive(node.childs.get(idx), predecesor));
+            }
+        } else if (node.childs.get(idx) != null) {
+            node.childs.set(idx, removeRecursive(node.childs.get(idx), cl));
+        }
+        return node;
+    }
 }
 
 
