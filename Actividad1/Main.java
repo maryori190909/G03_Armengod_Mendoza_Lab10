@@ -18,7 +18,8 @@ public class Main {
             System.out.println("2. Buscar clave");
             System.out.println("3. Mostrar arbol");
             System.out.println("4. Eliminar clave");
-            System.out.println("5. Salir");
+            System.out.println("5. Counstruir arbol desde un archivo");
+            System.out.println("6. Salir");
             System.out.print("Seleccione una opcion: ");
             opcion = sc.nextInt();
 
@@ -59,6 +60,15 @@ public class Main {
                     }
                     break;
                 case 5:
+                    try {
+                        String arch = "arbolB.txt";
+                        arbol = BTree.buildBTree(arch);
+                        System.out.println("Arbol construido exitosamente desde el archivo " + arch);
+                    } catch (Exception e) {
+                        System.out.println("Error al construir el arbol: " + e.getMessage());
+                    }
+                    break;
+                case 6:
                     System.out.println("Saliendo del programa...");
                     break;
                 default:
