@@ -1,6 +1,7 @@
-
+package Actividad1.btre;
 import java.util.ArrayList;
 import Actividad1.exeptions.*;
+
 public class BTree<E extends Comparable<E>> {
 
     private BNode<E> root;
@@ -16,12 +17,11 @@ public class BTree<E extends Comparable<E>> {
     public boolean isEmpty() {
     return this.root == null;
     }
-}
 
     public void insert(E cl) {
     try {
         up = false;
-        E mediana = push( root , cl);
+        E mediana = push(root , cl);
     if (up) {
         BNode<E> nuevo = new BNode<>(orden);
         nuevo.count = 1;
@@ -33,6 +33,7 @@ public class BTree<E extends Comparable<E>> {
     } catch (ItemDuplicated e) {
     System.out.println(e.getMessage());
     }
+}
 
     private E push(BNode<E> actual, E cl) throws ItemDuplicated {
         int[] pos = new int[1];
@@ -129,6 +130,11 @@ public class BTree<E extends Comparable<E>> {
         }
             return sb.toString();
         }
+
+    public E search(E clave) throws ItemNoFound, ExceptionIsEmpty {
+        if (isEmpty()) throw new ExceptionIsEmpty("El arbol está vacio.");
+        return searchRecursive(root, clave);
+    }
 }
 
 

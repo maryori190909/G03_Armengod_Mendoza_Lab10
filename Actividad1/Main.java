@@ -1,8 +1,6 @@
 package Actividad1;
-
-import Actividad1.btree.BTree;
 import Actividad1.exeptions.*;
-
+import Actividad1.btre.BTree;
 import java.util.Scanner;
 
 public class Main {
@@ -48,13 +46,10 @@ public class Main {
                     System.out.println("Saliendo del programa...");
                     break;
                 default:
-                    System.out.println("Opción inválida.");
+                    System.out.println("Opción invalida.");
             }
         } while (opcion != 4);
-
         sc.close();
-        
     }
-
 }
 

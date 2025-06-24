@@ -1,6 +1,5 @@
+package Actividad1.btre;
 import java.util.ArrayList;
-import Actividad1.exeptions.*;
-
 public class BNode<E extends Comparable<E>>{
 
     protected ArrayList<E> keys;
