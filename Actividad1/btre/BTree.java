@@ -8,32 +8,34 @@ public class BTree<E extends Comparable<E>> {
     private int orden;
     private boolean up;
     private BNode<E> nDes;
+    private static int contadorId = 0;
 
     public BTree(int orden) {
-    this.orden = orden;
-    this.root = null;
+        this.orden = orden;
+        this.root = null;
     }
-    
+
     public boolean isEmpty() {
-    return this.root == null;
+        return this.root == null;
     }
 
     public void insert(E cl) {
-    try {
-        up = false;
-        E mediana = push(root , cl);
-    if (up) {
-        BNode<E> nuevo = new BNode<>(orden);
-        nuevo.count = 1;
-        nuevo.keys.set(0, mediana);
-        nuevo.childs.set(0, root);
-        nuevo.childs.set(1, nDes);
-        root = nuevo;
+        try {
+            up = false;
+            E mediana = push(root, cl);
+            if (up) {
+                BNode<E> nuevo = new BNode<>(orden);
+                nuevo.count = 1;
+                nuevo.idNode = contadorId++;
+                nuevo.keys.set(0, mediana);
+                nuevo.childs.set(0, root);
+                nuevo.childs.set(1, nDes);
+                root = nuevo;
+            }
+        } catch (ItemDuplicated e) {
+            System.out.println(e.getMessage());
+        }
     }
-    } catch (ItemDuplicated e) {
-    System.out.println(e.getMessage());
-    }
-}
 
     private E push(BNode<E> actual, E cl) throws ItemDuplicated {
         int[] pos = new int[1];
@@ -41,13 +43,13 @@ public class BTree<E extends Comparable<E>> {
         if (actual == null) {
             up = true;
             nDes = null;
-        return cl;
+            return cl;
         }
         boolean found = actual.searchNode(cl, pos);
         if (found) {
-        throw new ItemDuplicated("La clave " + cl + " ya existe en el arbol.");
+            throw new ItemDuplicated("La clave " + cl + " ya existe en el arbol.");
         }
-            mediana = push(actual.childs.get(pos[0]), cl);
+        mediana = push(actual.childs.get(pos[0]), cl);
         if (!up) return null;
         if (actual.nodeFull(orden - 1)) {
             mediana = divideNode(actual, mediana, pos[0]);
@@ -55,30 +57,30 @@ public class BTree<E extends Comparable<E>> {
             putNode(actual, mediana, nDes, pos[0]);
             up = false;
         }
-            return mediana;
-        }
+        return mediana;
+    }
 
-    private void putNode(BNode<E> actual, E cl, BNode<E> rChild, int pos)
-    {
+    private void putNode(BNode<E> actual, E cl, BNode<E> rChild, int pos) {
         for (int i = actual.count - 1; i >= pos; i--) {
             actual.keys.set(i + 1, actual.keys.get(i));
             actual.childs.set(i + 2, actual.childs.get(i + 1));
         }
-            actual.keys.set(pos, cl);
-            actual.childs.set(pos + 1, rChild);
-            actual.count++;
-        }
+        actual.keys.set(pos, cl);
+        actual.childs.set(pos + 1, rChild);
+        actual.count++;
+    }
 
     private E divideNode(BNode<E> actual, E cl, int k) {
         BNode<E> rChild = nDes;
         int mid = (k <= orden / 2) ? orden / 2 : orden / 2 + 1;
         nDes = new BNode<>(orden);
+        nDes.idNode = contadorId++;
         for (int i = mid; i < orden - 1; i++) {
             nDes.keys.set(i - mid, actual.keys.get(i));
             nDes.childs.set(i - mid + 1, actual.childs.get(i + 1));
         }
-            nDes.count = (orden - 1) - mid;
-            actual.count = mid;
+        nDes.count = (orden - 1) - mid;
+        actual.count = mid;
         if (k <= orden / 2) {
             putNode(actual, cl, rChild, k);
         } else {
@@ -89,56 +91,56 @@ public class BTree<E extends Comparable<E>> {
         actual.count--;
         up = true;
         return median;
-        }
+    }
 
     @Override
     public String toString() {
-    if (isEmpty()) {
-        return "El árbol B está vacío...\n";
-    } else {
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%-10s %-17s %-10s %-10s\n", "Id.Nodo", "Claves Nodo", "Id.Padre", "Id.Hijos"));
-        writeTree(this.root, null, sb);
-        return sb.toString();
-    }
-}
-    
-    private void writeTree(BNode<E> actual, Integer idPadre, StringBuilder sb) {
-    if (actual == null) return;
-
-    StringBuilder claves = new StringBuilder("(");
-    for (int i = 0; i < actual.count; i++) {
-        claves.append(actual.keys.get(i));
-        if (i < actual.count - 1) claves.append(", ");
-    }
-    claves.append(")");
-
-    ArrayList<Integer> hijos = new ArrayList<>();
-    for (int i = 0; i <= actual.count; i++) {
-        BNode<E> hijo = actual.childs.get(i);
-        if (hijo != null) hijos.add(hijo.idNode);
-    }
-
-    String padreStr = (idPadre == null) ? "-" : "[" + idPadre + "]";
-    String hijosStr = hijos.isEmpty() ? "-" : hijos.toString();
-
-    sb.append(String.format("%-10d %-17s %-10s %-10s\n",
-        actual.idNode,
-        claves.toString(),
-        padreStr,
-        hijosStr
-    ));
-
-    for (int i = 0; i <= actual.count; i++) {
-        BNode<E> hijo = actual.childs.get(i);
-        if (hijo != null) {
-            writeTree(hijo, actual.idNode, sb);
+        if (isEmpty()) {
+            return "El árbol B está vacío...\n";
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.format("%-10s %-17s %-10s %-10s\n", "Id.Nodo", "Claves Nodo", "Id.Padre", "Id.Hijos"));
+            writeTree(this.root, null, sb);
+            return sb.toString();
         }
     }
-}
+
+    private void writeTree(BNode<E> actual, Integer idPadre, StringBuilder sb) {
+        if (actual == null) return;
+
+        StringBuilder claves = new StringBuilder("(");
+        for (int i = 0; i < actual.count; i++) {
+            claves.append(actual.keys.get(i));
+            if (i < actual.count - 1) claves.append(", ");
+        }
+        claves.append(")");
+
+        ArrayList<Integer> hijos = new ArrayList<>();
+        for (int i = 0; i <= actual.count; i++) {
+            BNode<E> hijo = actual.childs.get(i);
+            if (hijo != null) hijos.add(hijo.idNode);
+        }
+
+        String padreStr = (idPadre == null) ? "--" : "[" + idPadre + "]";
+        String hijosStr = hijos.isEmpty() ? "--" : hijos.toString();
+
+        sb.append(String.format("%-10d %-17s %-10s %-10s\n",
+            actual.idNode,
+            claves.toString(),
+            padreStr,
+            hijosStr
+        ));
+
+        for (int i = 0; i <= actual.count; i++) {
+            BNode<E> hijo = actual.childs.get(i);
+            if (hijo != null) {
+                writeTree(hijo, actual.idNode, sb);
+            }
+        }
+    }
 
     public E search(E cl) throws ItemNoFound, ExceptionIsEmpty {
-        if (isEmpty()) throw new ExceptionIsEmpty("El arbol está vacio.");
+        if (isEmpty()) throw new ExceptionIsEmpty("El arbol esta vacio.");
         return searchRecursive(root, cl);
     }
 
@@ -210,6 +212,7 @@ public class BTree<E extends Comparable<E>> {
         return node;
     }
 }
+
 
 
     
