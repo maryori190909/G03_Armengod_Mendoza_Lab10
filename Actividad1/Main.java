@@ -1,14 +1,15 @@
 package Actividad1;
-import Actividad1.exeptions.*;
 import Actividad1.btre.BTree;
+import Actividad1.exeptions.*;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
-        BTree<Integer> arbol = new BTree<>(4);
+        BTree<Integer> arbol = new BTree<> (4);
         int opcion;
         do {
             System.out.println("\n--- MENÚ ÁRBOL B ---");
@@ -27,10 +28,13 @@ public class Main {
                     break;
                 case 2:
                     System.out.print("Ingrese la clave a buscar: ");
-                    int buscar = sc.nextInt();
                     try {
+                        int buscar = sc.nextInt();
                         Integer encontrado = arbol.search(buscar);
                         System.out.println("Clave encontrada: " + encontrado);
+                    } catch (InputMismatchException e) {
+                        System.out.println("Entrada inválida. Debe ingresar un número entero.");
+                        sc.nextLine();
                     } catch (ItemNoFound | ExceptionIsEmpty e) {
                         System.out.println("Error: " + e.getMessage());
                     }

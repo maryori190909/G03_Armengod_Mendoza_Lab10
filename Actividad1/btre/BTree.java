@@ -131,9 +131,24 @@ public class BTree<E extends Comparable<E>> {
             return sb.toString();
         }
 
-    public E search(E clave) throws ItemNoFound, ExceptionIsEmpty {
+    public E search(E cl) throws ItemNoFound, ExceptionIsEmpty {
         if (isEmpty()) throw new ExceptionIsEmpty("El arbol está vacio.");
-        return searchRecursive(root, clave);
+        return searchRecursive(root, cl);
+    }
+
+    private E searchRecursive(BNode<E> node, E cl) throws ItemNoFound {
+        if (node == null) throw new ItemNoFound("Clave no encontrada.");
+        
+        int i = 0;
+        while (i < node.count && cl.compareTo(node.keys.get(i)) > 0) {
+            i++;
+        }
+
+        if (i < node.count && cl.compareTo(node.keys.get(i)) == 0) {
+            return node.keys.get(i);
+        }
+
+        return searchRecursive(node.childs.get(i), cl);
     }
 }
 
