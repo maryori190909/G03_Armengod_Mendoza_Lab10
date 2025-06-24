@@ -260,9 +260,28 @@ public class BTree<E extends Comparable<E>> {
                 break;
             }
 
+                for (Map.Entry<Integer, List<Integer>> entry : hijosTemp.entrySet()) {
+                int idPadre = entry.getKey();
+                BNode<Integer> padre = nodos.get(idPadre);
+                int idx = 0;
+                for (int idHijo : entry.getValue()) {
+                    padre.childs.set(idx++, nodos.get(idHijo));
+                }
+            }
+
+            int idRaiz = niveles.entrySet().stream() .filter(e -> e.getValue() == 0) .map(Map.Entry::getKey)
+                .findFirst().orElseThrow(() -> new ItemNoFound("No se encontró raiz valida."));
+
+                tree.root = nodos.get(idRaiz);
+                return tree;
+
+            } catch (IOException | NumberFormatException e) {
+                throw new ItemNoFound("Error al construir el arbol desde archivo: " + e.getMessage());
+            }
+
         }
     }
-}
+
 
 
 
