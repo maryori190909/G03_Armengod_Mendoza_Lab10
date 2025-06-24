@@ -235,6 +235,31 @@ public class BTree<E extends Comparable<E>> {
                     claves.add(Integer.parseInt(partes[i]));
                 }
 
+                BNode<Integer> nodo = new BNode<>(orden);
+                nodo.idNode = idNodo;
+                nodo.count = claves.size();
+                for (int i = 0; i < claves.size(); i++) {
+                    nodo.keys.set(i, claves.get(i));
+                }
+
+                nodos.put(idNodo, nodo);
+                niveles.put(idNodo, nivel);
+
+                if (nivel == 2) continue;
+
+                List<Integer> hijos = new ArrayList<>();
+                while ((linea = leer.readLine()) != null && linea.startsWith("2,")) {
+                    String[] parts = linea.split(",");
+                    int idPadre = Integer.parseInt(parts[1]);
+                    for (int i = 2; i < parts.length; i++) {
+                        hijos.add(Integer.parseInt(parts[i]));
+                    }
+                    hijosTemp.put(idPadre, hijos);
+                }
+
+                break;
+            }
+
         }
     }
 }
