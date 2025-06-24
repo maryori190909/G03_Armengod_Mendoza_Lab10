@@ -15,9 +15,10 @@ public class Main {
             System.out.println("\n--- MENÚ ÁRBOL B ---");
             System.out.println("1. Insertar clave");
             System.out.println("2. Buscar clave");
-            System.out.println("3. Mostrar árbol");
-            System.out.println("4. Salir");
-            System.out.print("Seleccione una opción: ");
+            System.out.println("3. Mostrar arbol");
+            System.out.println("4. Eliminar clave");
+            System.out.println("5. Salir");
+            System.out.print("Seleccione una opcion: ");
             opcion = sc.nextInt();
 
         switch (opcion) {
@@ -30,13 +31,13 @@ public class Main {
                     System.out.print("Ingrese la clave a buscar: ");
                     try {
                         int buscar = sc.nextInt();
-                        Integer encontrado = arbol.search(buscar);
-                        System.out.println("Clave encontrada: " + encontrado);
+                        boolean encontrado = arbol.searchNode(buscar);
+                        if (!encontrado) {
+                            System.out.println("La clave no pudo encontrarse en el arbol.");
+                        }
                     } catch (InputMismatchException e) {
-                        System.out.println("Entrada inválida. Debe ingresar un número entero.");
+                        System.out.println("Entrada invalida, debe ingresar un numero entero.");
                         sc.nextLine();
-                    } catch (ItemNoFound | ExceptionIsEmpty e) {
-                        System.out.println("Error: " + e.getMessage());
                     }
                     break;
                 case 3:
@@ -47,12 +48,22 @@ public class Main {
                     }
                     break;
                 case 4:
+                    System.out.print("Ingrese la clave a eliminar: ");
+                    try {
+                        int eliminar = sc.nextInt();
+                        arbol.remove(eliminar);
+                    } catch (InputMismatchException e) {
+                        System.out.println("Entrada invalida, debe ingresar un numero entero.");
+                        sc.nextLine();
+                    }
+                    break;
+                case 5:
                     System.out.println("Saliendo del programa...");
                     break;
                 default:
                     System.out.println("Opción invalida.");
             }
-        } while (opcion != 4);
+        } while (opcion != 5);
         sc.close();
     }
 }
