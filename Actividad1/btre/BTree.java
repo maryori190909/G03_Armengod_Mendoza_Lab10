@@ -151,6 +151,19 @@ public class BTree<E extends Comparable<E>> {
     public boolean searchNode(E cl) {
         return searchNodeRecursive(root, cl);
     }
+
+    private boolean searchNodeRecursive(BNode<E> node, E cl) {
+        if (node == null) return false;
+        int i = 0;
+        while (i < node.count && cl.compareTo(node.keys.get(i)) > 0) {
+            i++;
+        }
+        if (i < node.count && cl.compareTo(node.keys.get(i)) == 0) {
+            System.out.println(cl + " se encuentra en el nodo " + node.idNode + " ,en la posicion " + i);
+            return true;
+        }
+        return searchNodeRecursive(node.childs.get(i), cl);
+    }
 }
 
 
