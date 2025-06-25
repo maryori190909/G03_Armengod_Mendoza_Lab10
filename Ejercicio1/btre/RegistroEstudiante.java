@@ -4,4 +4,9 @@ public class RegistroEstudiante implements Comparable<RegistroEstudiante>{
     private int cod;
     private String nombre;
 
+    public RegistroEstudiante(int cod, String nombre) {
+        this.cod = cod;
+        this.nombre = nombre;
+    }
+
 }
