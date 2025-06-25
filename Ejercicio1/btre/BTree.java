@@ -218,5 +218,18 @@ public class BTree<E extends Comparable<E>> {
         return (resultado != null) ? resultado.getNombre() : "No fue encontrado";
     }
 
+    private RegistroEstudiante buscarNombreRecursivo(BNode<E> nodo, int cod) {
+        if (nodo == null) return null;
+        for (int i = 0; i < nodo.count; i++) {
+            RegistroEstudiante actual = (RegistroEstudiante) nodo.keys.get(i);
+            if (actual.getCodigo() == cod) {
+                return actual;
+            } else if (cod < actual.getCodigo()) {
+                return buscarNombreRecursivo(nodo.childs.get(i), cod);
+            }
+        }
+        return buscarNombreRecursivo(nodo.childs.get(nodo.count), cod);
+    }
+
 }
 
