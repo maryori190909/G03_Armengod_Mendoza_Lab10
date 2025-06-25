@@ -9,4 +9,8 @@ public class RegistroEstudiante implements Comparable<RegistroEstudiante>{
         this.nombre = nombre;
     }
 
+    public int getCodigo() { return cod; }
+    public String getNombre() { return nombre; }
+
+
 }
