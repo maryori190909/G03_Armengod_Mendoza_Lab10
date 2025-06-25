@@ -1,4 +1,6 @@
 package Actividad1.btre;
+import java.util.ArrayList;
+
 import Actividad1.exeptions.*;
 
 public class BTree<E extends Comparable<E>> {
@@ -212,7 +214,8 @@ public class BTree<E extends Comparable<E>> {
     }
 
     public String buscarNombre(int cod){
-        
+        RegistroEstudiante resultado = buscarNombreRecursivo(root, cod);
+        return (resultado != null) ? resultado.getNombre() : "No fue encontrado";
     }
 
 }
