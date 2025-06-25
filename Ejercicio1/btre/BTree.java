@@ -231,5 +231,9 @@ public class BTree<E extends Comparable<E>> {
         return buscarNombreRecursivo(nodo.childs.get(nodo.count), cod);
     }
 
+    public void eliminarCodigo(int cod) {
+        eliminarCodigoRecursivo(root, cod);
+    }
+
 }
 
