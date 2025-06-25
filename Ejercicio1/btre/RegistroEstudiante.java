@@ -12,5 +12,13 @@ public class RegistroEstudiante implements Comparable<RegistroEstudiante>{
     public int getCodigo() { return cod; }
     public String getNombre() { return nombre; }
 
+    @Override
+    public int compareTo(RegistroEstudiante otro) {
+        return Integer.compare(this.cod, otro.cod);
+    }
 
+    @Override
+    public String toString() {
+        return cod + " - " + nombre;
+    }
 }
