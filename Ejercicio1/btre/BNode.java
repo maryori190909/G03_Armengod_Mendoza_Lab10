@@ -1,4 +1,4 @@
-package Actividad1.btre;
+package Ejercicio1.btre;
 import java.util.ArrayList;
 public class BNode<E extends Comparable<E>>{
 

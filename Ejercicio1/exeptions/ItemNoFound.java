@@ -1,4 +1,4 @@
-package Actividad1.exeptions;
+package Ejercicio1.exeptions;
 
 public class ItemNoFound extends Exception{
     public ItemNoFound(String mens){

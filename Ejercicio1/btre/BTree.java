@@ -1,7 +1,7 @@
-package Actividad1.btre;
+package Ejercicio1.btre;
 import java.util.ArrayList;
 
-import Actividad1.exeptions.*;
+import Ejercicio1.exeptions.*;
 
 public class BTree<E extends Comparable<E>> {
 

@@ -1,4 +1,4 @@
-package Actividad1.exeptions;
+package Ejercicio1.exeptions;
 public class ExceptionIsEmpty extends Exception{
 
     public ExceptionIsEmpty(String mens){
