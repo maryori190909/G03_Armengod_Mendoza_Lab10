@@ -211,70 +211,9 @@ public class BTree<E extends Comparable<E>> {
         return node;
     }
 
-    public static BTree<Integer> buildBTree(String arch) throws ItemNoFound {
-    try (BufferedReader br = new BufferedReader(new FileReader(arch))) {
-        int orden = Integer.parseInt(br.readLine().trim());
-        BTree<Integer> tree = new BTree<>(orden);
-
-        Map<Integer, BNode<Integer>> nodos = new HashMap<>();
-        Map<Integer, Integer> niveles = new HashMap<>();
-        Map<Integer, List<Integer>> hijosPorPadre = new HashMap<>();
-
-        String linea;
-        while ((linea = br.readLine()) != null) {
-            String[] partes = linea.trim().split(",");
-            int nivel = Integer.parseInt(partes[0]);
-            int idNodo = Integer.parseInt(partes[1]);
-
-            BNode<Integer> nodo = new BNode<>(orden);
-            nodo.idNode = idNodo;
-            nodo.count = partes.length - 2;
-            for (int i = 2; i < partes.length; i++) {
-                nodo.keys.set(i - 2, Integer.parseInt(partes[i]));
-            }
-
-            nodos.put(idNodo, nodo);
-            niveles.put(idNodo, nivel);
-        }
-
-        Integer idRaiz = niveles.entrySet().stream()
-            .filter(e -> e.getValue() == 0)
-            .map(Map.Entry::getKey)
-            .findFirst()
-            .orElseThrow(() -> new ItemNoFound("No se encontro la raiz valida"));
-
-        for (Map.Entry<Integer, Integer> entryPadre : niveles.entrySet()) {
-            int idPadre = entryPadre.getKey();
-            int nivelPadre = entryPadre.getValue();
-            BNode<Integer> padre = nodos.get(idPadre);
-
-            for (Map.Entry<Integer, Integer> entryHijo : niveles.entrySet()) {
-                int idHijo = entryHijo.getKey();
-                int nivelHijo = entryHijo.getValue();
-                if (nivelHijo == nivelPadre + 1 && esHijo(padre, nodos.get(idHijo))) {
-                    for (int i = 0; i < padre.childs.size(); i++) {
-                        if (padre.childs.get(i) == null) {
-                            padre.childs.set(i, nodos.get(idHijo));
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-            tree.root = nodos.get(idRaiz);
-            return tree;
-
-        } catch (IOException | NumberFormatException e) {
-            throw new ItemNoFound("Error al construir el arbol desde archivo: " + e.getMessage());
-        }
+    public String buscarNombre(int cod){
+        
     }
 
-    private static boolean esHijo(BNode<Integer> padre, BNode<Integer> posibleHijo) {
-    if (padre == null || posibleHijo == null || padre.count == 0) return false;
-    int minHijo = posibleHijo.keys.get(0);
-    int maxPadre = padre.keys.get(padre.count - 1);
-    return minHijo <= maxPadre;
-    }
-    }
+}
 
