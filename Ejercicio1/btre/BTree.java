@@ -235,5 +235,26 @@ public class BTree<E extends Comparable<E>> {
         eliminarCodigoRecursivo(root, cod);
     }
 
+    private void eliminarCodigoRecursivo(BNode<E> nodo, int cod) {
+        if (nodo == null) return;
+
+        for (int i = 0; i < nodo.count; i++) {
+            RegistroEstudiante actual = (RegistroEstudiante) nodo.keys.get(i);
+            if (actual.getCodigo() == cod) {
+                for (int j = i; j < nodo.count - 1; j++) {
+                    nodo.keys.set(j, nodo.keys.get(j + 1));
+                }
+                nodo.keys.set(nodo.count - 1, null);
+                nodo.count--;
+                System.out.println("El estudiante con codigo " + cod + " fue eliminado.");
+                return;
+            } else if (cod < actual.getCodigo()) {
+                eliminarCodigoRecursivo(nodo.childs.get(i), cod);
+                return;
+            }
+        }
+        eliminarCodigoRecursivo(nodo.childs.get(nodo.count), cod);
+    }
+
 }
 
